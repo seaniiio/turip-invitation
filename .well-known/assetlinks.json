@@ -3,9 +3,9 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "com.yourcompany.turip",
+      "package_name": "com.on.turip",
       "sha256_cert_fingerprints": [
-        "AA:BB:CC:DD:EE:FF:..."
+        "31:A9:3A:9E:FE:DA:3D:32:B0:D0:C6:AD:29:38:7B:28:A0:34:27:D1:E7:0A:79:4A:FD:E7:7E:0C:74:35:5E:11"
       ]
     }
   }
