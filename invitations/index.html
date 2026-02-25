@@ -8,8 +8,15 @@
   <body>
     <script>
       const ANDROID_PACKAGE = "com.on.turip";
-      const storeUrl =
+
+      const params = new URLSearchParams(window.location.search);
+      const token = params.get("token");
+
+      let storeUrl =
         "https://play.google.com/store/apps/details?id=" + ANDROID_PACKAGE;
+      if (token) {
+        storeUrl += "&referrer=" + token;
+      }
 
       // 페이지 로드 시 자동으로 플레이스토어로 리디렉션
       window.location.href = storeUrl;
