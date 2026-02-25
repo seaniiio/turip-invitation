@@ -18,8 +18,8 @@
         storeUrl += "&referrer=" + token;
       }
 
-      // 페이지 로드 시 자동으로 플레이스토어로 리디렉션
-      window.location.href = storeUrl;
+      // 페이지 로드 시 자동으로 플레이스토어로 리디렉션 (히스토리 제거 후 이동)
+      window.location.replace(storeUrl);
     </script>
   </body>
 </html>
