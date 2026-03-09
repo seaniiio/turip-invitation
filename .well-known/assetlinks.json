@@ -8,5 +8,15 @@
         "31:A9:3A:9E:FE:DA:3D:32:B0:D0:C6:AD:29:38:7B:28:A0:34:27:D1:E7:0A:79:4A:FD:E7:7E:0C:74:35:5E:11"
       ]
     }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.on.turip.debug",
+      "sha256_cert_fingerprints": [
+        "D4:08:97:99:3B:AD:45:17:44:8F:3B:EF:27:38:19:AF:59:1C:01:B0:45:2F:8A:28:B8:2C:BA:D8:5D:A9:BE:E9"
+      ]
+    }
   }
 ]
