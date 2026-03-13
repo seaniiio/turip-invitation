@@ -18,22 +18,31 @@
         storeUrl += "&referrer=" + token;
       }
 
-      // 카카오톡 인앱 브라우저: intent:// 스킴으로 앱 직접 실행 시도
-      // 앱 미설치 시 browser_fallback_url(플레이스토어)로 자동 이동
-      if (/KAKAOTALK/i.test(navigator.userAgent)) {
+      const isKakao = /KAKAOTALK/i.test(navigator.userAgent);
+      const u = new URL(location.href);
+      const ext = u.searchParams.get("ext");
+
+      if (isKakao && !ext) {
+        // 1) 카카오 인앱 브라우저 → 외부 브라우저로 탈출 (ext=1 마킹)
+        u.searchParams.set("ext", "1");
+        const out = u.toString();
         location.href =
-          "intent://" +
-          location.host +
-          location.pathname +
-          location.search +
-          "#Intent;scheme=https;package=" +
-          ANDROID_PACKAGE +
-          ";S.browser_fallback_url=" +
-          encodeURIComponent(storeUrl) +
-          ";end";
+          "kakaotalk://web/openExternal?url=" + encodeURIComponent(out);
+        // openExternal 실패 대비 fallback
+        setTimeout(() => {
+          location.replace(out);
+        }, 800);
+      } else if (ext === "2") {
+        // 3) App Link 시도 후 앱이 열리지 않은 경우 → Play Store
+        location.replace(storeUrl);
       } else {
-        // 페이지 로드 시 자동으로 플레이스토어로 리디렉션 (히스토리 제거 후 이동)
-        window.location.replace(storeUrl);
+        // 2) 외부 브라우저에서 App Link 시도 (ext=2로 재시도 방지)
+        u.searchParams.set("ext", "2");
+        location.replace(u.toString());
+        // 앱이 열리면 페이지 언로드, 열리지 않으면 ext=2 페이지 로드 → Play Store
+        setTimeout(() => {
+          location.replace(storeUrl);
+        }, 1500);
       }
     </script>
   </body>
