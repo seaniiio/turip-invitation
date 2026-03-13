@@ -12,11 +12,10 @@
         location.href = "kakaotalk://web/openExternal?url=" + encodeURIComponent(location.href);
       }
 
+      const ANDROID_PACKAGE = "com.on.turip";
+
       const params = new URLSearchParams(window.location.search);
       const token = params.get("token");
-      const isDebug = params.get("debug") === "true";
-
-      const ANDROID_PACKAGE = isDebug ? "com.on.turip.debug" : "com.on.turip";
 
       let storeUrl =
         "https://play.google.com/store/apps/details?id=" + ANDROID_PACKAGE;
