@@ -7,14 +7,6 @@
   </head>
   <body>
     <script>
-      // 카카오톡 인앱 브라우저에서는 App Links가 동작하지 않으므로 외부 브라우저로 강제 이동
-      if (/KAKAOTALK/i.test(navigator.userAgent)) {
-        location.href =
-          "kakaotalk://web/openExternal?url=" +
-          encodeURIComponent(location.href);
-        return;
-      }
-
       const ANDROID_PACKAGE = "com.on.turip";
 
       const params = new URLSearchParams(window.location.search);
@@ -26,8 +18,23 @@
         storeUrl += "&referrer=" + token;
       }
 
-      // 페이지 로드 시 자동으로 플레이스토어로 리디렉션 (히스토리 제거 후 이동)
-      window.location.replace(storeUrl);
+      // 카카오톡 인앱 브라우저: intent:// 스킴으로 앱 직접 실행 시도
+      // 앱 미설치 시 browser_fallback_url(플레이스토어)로 자동 이동
+      if (/KAKAOTALK/i.test(navigator.userAgent)) {
+        location.href =
+          "intent://" +
+          location.host +
+          location.pathname +
+          location.search +
+          "#Intent;scheme=https;package=" +
+          ANDROID_PACKAGE +
+          ";S.browser_fallback_url=" +
+          encodeURIComponent(storeUrl) +
+          ";end";
+      } else {
+        // 페이지 로드 시 자동으로 플레이스토어로 리디렉션 (히스토리 제거 후 이동)
+        window.location.replace(storeUrl);
+      }
     </script>
   </body>
 </html>
