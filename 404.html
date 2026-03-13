@@ -7,10 +7,16 @@
   </head>
   <body>
     <script>
-      const ANDROID_PACKAGE = "com.on.turip";
+      // 카카오톡 인앱 브라우저에서는 App Links가 동작하지 않으므로 외부 브라우저로 강제 이동
+      if (/KAKAOTALK/i.test(navigator.userAgent)) {
+        location.href = "kakaotalk://web/openExternal?url=" + encodeURIComponent(location.href);
+      }
 
       const params = new URLSearchParams(window.location.search);
       const token = params.get("token");
+      const isDebug = params.get("debug") === "true";
+
+      const ANDROID_PACKAGE = isDebug ? "com.on.turip.debug" : "com.on.turip";
 
       let storeUrl =
         "https://play.google.com/store/apps/details?id=" + ANDROID_PACKAGE;
