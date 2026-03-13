@@ -32,17 +32,10 @@
         setTimeout(() => {
           location.replace(out);
         }, 800);
-      } else if (ext === "2") {
-        // 3) App Link 시도 후 앱이 열리지 않은 경우 → Play Store
-        location.replace(storeUrl);
       } else {
-        // 2) 외부 브라우저에서 App Link 시도 (ext=2로 재시도 방지)
-        u.searchParams.set("ext", "2");
-        location.replace(u.toString());
-        // 앱이 열리면 페이지 언로드, 열리지 않으면 ext=2 페이지 로드 → Play Store
-        setTimeout(() => {
-          location.replace(storeUrl);
-        }, 1500);
+        // 2) 비-카카오 브라우저: App Link는 Chrome이 URL을 열 때 이미 시도됨
+        // HTML이 로드됐다는 것 = 앱 미설치 or App Link 실패 → Play Store
+        location.replace(storeUrl);
       }
     </script>
   </body>
