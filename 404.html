@@ -101,8 +101,13 @@
         `intent://${invitationUrl.host}${invitationUrl.pathname}${invitationUrl.search}` +
         `#Intent;scheme=https;package=${ANDROID_PACKAGE};` +
         `S.browser_fallback_url=${encodeURIComponent(storeUrl.toString())};end`;
+      const iosAppUrl = new URL("turip://invitations/");
+      if (token) {
+        iosAppUrl.searchParams.set("token", token);
+      }
 
       const isKakao = /KAKAOTALK/i.test(navigator.userAgent);
+      const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
       let fallbackTimer = null;
 
       function cancelFallback() {
@@ -126,7 +131,7 @@
       }
 
       function openTuripApp() {
-        location.href = intentUrl;
+        location.href = isIOS ? iosAppUrl.toString() : intentUrl;
         scheduleFallback();
       }
 
