@@ -161,7 +161,12 @@
       });
       window.addEventListener("pagehide", cancelFallback);
 
-      if (isKakao) {
+      if (isKakao && isIOS) {
+        // iOS KakaoTalk: kakaotalk://web/openExternal이 WKWebView에서 불안정하게 동작해
+        // WebKit 에러 페이지를 띄우는 경우가 있음. 인앱 브라우저 안에서 폴백 UI를 바로 표시하고
+        // "앱으로 열기" 버튼 탭(사용자 제스처)으로 turip://를 열도록 유도한다.
+        showFallback();
+      } else if (isKakao) {
         openExternalBrowser();
       } else if (isSafari) {
         // iOS Safari는 사용자 제스처 없이 실행되는 turip:// 이동을 차단해 오류를 표시한다.
