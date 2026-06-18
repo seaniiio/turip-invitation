@@ -2,7 +2,7 @@
   "applinks": {
     "details": [
       {
-        "appIDs": ["B68RUUV6LW.com.on.turip"],
+        "appIDs": ["C2ZQUWKQD6.com.on.turip"],
         "components": [
           { "/": "/invitations" },
           { "/": "/invitations/" },
