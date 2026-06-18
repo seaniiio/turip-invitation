@@ -85,6 +85,7 @@
 
       const params = new URLSearchParams(window.location.search);
       const token = params.get("token");
+      const fromKakao = params.get("from") === "kakao";
 
       const invitationUrl = new URL("https://invite.turip.kro.kr/invitations/");
       if (token) {
@@ -140,9 +141,14 @@
       }
 
       function openExternalBrowser() {
-        const out = invitationUrl.toString();
+        const out = new URL(invitationUrl.toString());
+        // iOS SFSafariViewController에서 Universal Links가 동작하지 않으므로
+        // 리다이렉트 출처를 기록해 재진입 시 turip:// 자동 실행을 막는다.
+        if (isIOS) {
+          out.searchParams.set("from", "kakao");
+        }
         location.href =
-          "kakaotalk://web/openExternal?url=" + encodeURIComponent(out);
+          "kakaotalk://web/openExternal?url=" + encodeURIComponent(out.toString());
         scheduleFallback();
       }
 
@@ -155,6 +161,11 @@
 
       if (isKakao) {
         openExternalBrowser();
+      } else if (isIOS && fromKakao) {
+        // KakaoTalk이 SFSafariViewController로 열어 Universal Links가 동작하지 않았거나
+        // 앱이 미설치 상태. turip:// 자동 실행 시 Safari 오류가 발생하므로
+        // 폴백 UI를 바로 표시해 사용자가 직접 선택하도록 한다.
+        showFallback();
       } else {
         openTuripApp();
       }
