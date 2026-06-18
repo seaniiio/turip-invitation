@@ -1,13 +1,12 @@
 {
   "applinks": {
-    "apps": [],
     "details": [
       {
-        "appID": "B68RUUV6LW.com.on.turip",
-        "paths": [
-          "/invitations",
-          "/invitations/",
-          "/invitations/*"
+        "appIDs": ["B68RUUV6LW.com.on.turip"],
+        "components": [
+          { "/": "/invitations" },
+          { "/": "/invitations/" },
+          { "/": "/invitations/*" }
         ]
       }
     ]
